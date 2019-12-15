@@ -1,0 +1,12 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        
+        xmlns:View="clr-namespace:Task_Manager.ViewModels"
+        x:Class="Task_Manager.MainWindow"
+        Title="Task Manager" Height="350" Width="500" SizeToContent="WidthAndHeight">
+    
+    <Grid>
+        <View:TaskListView/>
+    </Grid>
+</Window>

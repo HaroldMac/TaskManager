@@ -1,0 +1,68 @@
+﻿<UserControl x:Class="Task_Manager.ViewModels.TaskListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:task="clr-namespace:Task_Manager.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="500">
+    <Grid x:Name="grid"  >
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="5" HorizontalAlignment="Center">Task Manager</Label>
+        <Label x:Name="CurrentDate" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="5" HorizontalAlignment="Center" Content="{Binding CurrentDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></Label>
+
+        <Label Grid.Column="1" Grid.Row="4" Margin="10, 5, 0, 0">Name:</Label>
+        <TextBox x:Name="taskName" Grid.Column="1" Grid.Row="4" Grid.ColumnSpan="3" Margin="60, 10 , 0, 10" Text="{Binding NewTask.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  MinWidth="110"></TextBox>
+        <DatePicker x:Name="taskDueDate" Grid.Column="5" Grid.Row="4" Margin="10" SelectedDate="{Binding NewTask.DueDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></DatePicker>
+        <Button Grid.Column="6" Grid.Row="4"  MaxHeight="20" MaxWidth="50" Margin="10, 0, 0, 0" Command="{Binding AddCommand}" >Add</Button>
+        
+        <DataGrid x:Name="dataGrid" Grid.Column="1" Grid.Row="5" Grid.ColumnSpan="5" Grid.RowSpan="5" ItemsSource="{Binding Tasks}"   AutoGenerateColumns="False" SelectedItem="{Binding SelectedTask}" CanUserAddRows="False" >
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="{Binding Color}" />
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="Name" Binding="{Binding Name, UpdateSourceTrigger=PropertyChanged}"   Header="Name" Width="auto" MinWidth="110"/>
+                <DataGridTextColumn x:Name="DueDate" Binding="{Binding DueDate, StringFormat=D, UpdateSourceTrigger=PropertyChanged}" Header="Due Date" IsReadOnly="True" MinWidth="160"/>
+                <DataGridCheckBoxColumn x:Name="Completed" Binding="{Binding Completed, UpdateSourceTrigger=PropertyChanged}"   Header="Completed" Width="auto"/>
+            </DataGrid.Columns>
+        </DataGrid >
+
+        <Button Grid.Column="6" Grid.Row="7" Margin="10, 0, 0, 0" MaxHeight="20" MaxWidth="50" Command="{Binding UpdateCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}">Update</Button>
+        <Button Grid.Column="6" Grid.Row="8" Margin="10, 0, 0, 0" MaxHeight="20" MaxWidth="50" Command="{Binding DeleteCommand}" CommandParameter="{Binding ElementName=dataGrid, Path=SelectedItem}">Remove</Button>
+
+
+    </Grid>
+</UserControl>
